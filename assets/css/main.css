@@ -744,7 +744,7 @@ section,
   margin-bottom: 1.5rem;
 }
 
-.hero .hero-content h1 .accent-text {
+.hero .hero-content h3 .accent-text {
   color: var(--accent-color);
 }
 
