@@ -60,12 +60,9 @@
           </p>
 
           <form
-            class="php-email-form"
-            data-aos="fade-up"
-            data-aos-delay="200"
-            id="emailForm"
-            method="post"
-          >
+              action="https://formspree.io/f/movvpvvo"
+              method="post"
+            >
             <div class="row gy-4">
               <div class="col-md-6">
                 <input
@@ -110,11 +107,11 @@
               </div>
 
               <div class="col-12 text-center">
-                <div class="loading">Loading</div>
+                <!-- <div class="loading">Loading</div>
                 <div class="error-message"></div>
                 <div class="sent-message">
                   Your message has been sent. Thank you!
-                </div>
+                </div> -->
                 <button type="submit" class="btn">Send Message</button>
               </div>
             </div>
@@ -124,20 +121,5 @@
     </div>
   </div>
 </section>
-<script type="text/javascript">
-  function sendMail() {
-    Email.send({
-      // SecureToken: "a6d2b1cb-fa41-4d31-8e22-466b14a0c12d",
-      Host: "smtp.gmail.com",
-      Username: "aatmiksanghvi6@gmail.com",
-      Password: "dxtb jxaf vyli jjkj",
-      To: "coderaatmik@gmail.com",
-      From: "aatmiksanghvi6@gmail.com",
-      Subject: "This is the subject",
-      Body: "And this is the body",
-    }).then( message => alert(message));
-    console.log("mail sent");
-  }
-</script>
 <!-- 4ded2f76-3c91-4514-85e8-55c5f55384e1 6d7171fe-c659-4b29-b207-75806d7cbda1
 a6d2b1cb-fa41-4d31-8e22-466b14a0c12d -->
