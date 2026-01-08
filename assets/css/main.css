@@ -20,27 +20,33 @@
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
-  --default-color: #212529; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #2d465e; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #0d83fd; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --default-color: #1a1a1a; /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #0f172a; /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #2563eb; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --accent-hover: #1d4ed8; /* Accent color hover state */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+  --border-color: #e5e7eb; /* Border color for subtle separations */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Small shadow */
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Medium shadow */
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Large shadow */
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Extra large shadow */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #212529;  /* The default color of the main navmenu links */
-  --nav-hover-color: #0d83fd; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-color: #1a1a1a;  /* The default color of the main navmenu links */
+  --nav-hover-color: #2563eb; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: #212529; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #0d83fd; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-dropdown-color: #1a1a1a; /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #2563eb; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
 
 .light-background {
-  --background-color: #f3f9ff;
+  --background-color: #f8fafc;
   --surface-color: #ffffff;
 }
 
@@ -64,6 +70,9 @@ body {
   color: var(--default-color);
   background-color: var(--background-color);
   font-family: var(--default-font);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -85,6 +94,23 @@ h5,
 h6 {
   color: var(--heading-color);
   font-family: var(--heading-font);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 2rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+@media (max-width: 768px) {
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.75rem; }
+  h4 { font-size: 1.375rem; }
 }
 
 /* PHP Email Form Messages
@@ -153,9 +179,11 @@ h6 {
 
 .header .header-container {
   background: var(--surface-color);
-  border-radius: 50px;
-  padding: 5px 25px;
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 8px 24px;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
 }
 
 .scrolled .header .header-container {
@@ -184,16 +212,21 @@ h6 {
   color: var(--contrast-color);
   background: var(--accent-color);
   font-size: 14px;
-  padding: 8px 20px;
+  font-weight: 500;
+  padding: 10px 24px;
   margin: 0 0 0 30px;
-  border-radius: 50px;
-  transition: 0.3s;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: var(--shadow-sm);
 }
 
 .header .btn-getstarted:hover,
 .header .btn-getstarted:focus:hover {
   color: var(--contrast-color);
-  background: color-mix(in srgb, var(--accent-color), transparent 15%);
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 @media (max-width: 1200px) {
@@ -246,15 +279,21 @@ h6 {
   .navmenu a,
   .navmenu a:focus {
     color: var(--nav-color);
-    padding: 18px 15px;
-    font-size: 16px;
+    padding: 18px 16px;
+    font-size: 15px;
     font-family: var(--nav-font);
-    font-weight: 400;
+    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: space-between;
     white-space: nowrap;
-    transition: 0.3s;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin: 0 4px;
+  }
+  
+  .navmenu a:hover {
+    background-color: rgba(37, 99, 235, 0.05);
   }
 
   .navmenu a i,
@@ -563,8 +602,9 @@ h6 {
 }
 
 .footer .copyright {
-  padding: 25px 0;
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  padding: 30px 0;
+  border-top: 1px solid var(--border-color);
+  margin-top: 2rem;
 }
 
 .footer .copyright p {
@@ -665,7 +705,7 @@ section,
 .section {
   color: var(--default-color);
   background-color: var(--background-color);
-  padding: 60px 0;
+  padding: 80px 0;
   scroll-margin-top: 90px;
   overflow: clip;
 }
@@ -699,13 +739,14 @@ section,
   content: "";
   position: absolute;
   display: block;
-  width: 50px;
-  height: 3px;
-  background: var(--accent-color);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-color), #3b82f6);
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
+  border-radius: 2px;
 }
 
 .section-title p {
@@ -717,8 +758,10 @@ section,
 --------------------------------------------------------------*/
 .hero {
   position: relative;
-  padding-top: 160px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 95%) 50%, color-mix(in srgb, var(--accent-color), transparent 98%) 25%, transparent 50%);
+  padding-top: 180px;
+  padding-bottom: 100px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.03) 0%, rgba(37, 99, 235, 0.01) 50%, transparent 100%);
+  overflow: hidden;
 }
 
 .hero::before {
@@ -728,7 +771,19 @@ section,
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--accent-color), transparent 92%), transparent 40%);
+  background: radial-gradient(circle at 90% 10%, rgba(37, 99, 235, 0.05), transparent 50%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08), transparent 70%);
+  border-radius: 50%;
   pointer-events: none;
 }
 
@@ -744,8 +799,20 @@ section,
   margin-bottom: 1.5rem;
 }
 
+.hero .hero-content h3 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--heading-color);
+}
+
 .hero .hero-content h3 .accent-text {
   color: var(--accent-color);
+  background: linear-gradient(135deg, var(--accent-color), #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 @media (max-width: 992px) {
@@ -772,11 +839,14 @@ section,
 .hero .company-badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
-  border-radius: 50px;
+  padding: 0.625rem 1.25rem;
+  background-color: rgba(37, 99, 235, 0.1);
+  border-radius: 8px;
   color: var(--accent-color);
   font-weight: 500;
+  font-size: 14px;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  margin-bottom: 2rem;
 }
 
 .hero .company-badge i {
@@ -787,15 +857,20 @@ section,
   background-color: var(--accent-color);
   border-color: var(--accent-color);
   color: var(--contrast-color);
-  padding: 0.75rem 2.5rem;
-  border-radius: 50px;
-  font-weight: 500;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
   transition: all 0.3s ease;
+  box-shadow: var(--shadow-md);
+  border: none;
 }
 
 .hero .btn-primary:hover {
-  background-color: color-mix(in srgb, var(--accent-color), black 20%);
-  border-color: color-mix(in srgb, var(--accent-color), black 20%);
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .hero .btn-link {
@@ -830,12 +905,13 @@ section,
   bottom: 10px;
   right: 30px;
   background-color: var(--surface-color);
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
   max-width: 300px;
   animation: float-badge 3s ease-in-out infinite;
   will-change: transform;
+  border: 1px solid var(--border-color);
 }
 
 .hero .customers-badge .customer-avatars {
@@ -884,16 +960,24 @@ section,
   z-index: 1;
   margin-top: 5rem;
   background-color: var(--surface-color);
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  padding-bottom: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  padding: 2rem 0;
+  border: 1px solid var(--border-color);
 }
 
 .hero .stat-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
   padding: 2rem;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  margin: 0.5rem;
+}
+
+.hero .stat-item:hover {
+  background-color: rgba(37, 99, 235, 0.02);
 }
 
 .hero .stat-item .stat-icon {
@@ -903,9 +987,9 @@ section,
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
-  border-radius: 50px;
-  transition: 0.3s;
+  background-color: rgba(37, 99, 235, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
 }
 
 .hero .stat-item .stat-icon i {
@@ -925,10 +1009,13 @@ section,
   flex-grow: 1;
 }
 
-.hero .stat-item .stat-content h4 {
+.hero .stat-item .stat-content h4,
+.hero .stat-item .stat-content h7 {
   font-size: 1.25rem;
-  margin-bottom: 0.25rem;
-  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--heading-color);
+  line-height: 1.3;
 }
 
 .hero .stat-item .stat-content p {
@@ -965,6 +1052,9 @@ section,
   font-weight: 600;
   margin-bottom: 1rem;
   display: inline-block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .about .about-title {
@@ -983,6 +1073,8 @@ section,
 .about .about-description {
   margin-bottom: 2rem;
   color: color-mix(in srgb, var(--default-color), transparent 20%);
+  font-size: 16px;
+  line-height: 1.7;
 }
 
 .about .feature-list-wrapper {
@@ -1072,8 +1164,10 @@ section,
 }
 
 @media (max-width: 992px) {
-  .about .image-wrapper .main-image {
-    margin-left: 0;
+.about .image-wrapper .main-image {
+  margin-left: 0;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
   }
 }
 
@@ -1083,6 +1177,8 @@ section,
   left: -10%;
   width: 45%;
   border: 8px solid var(--surface-color);
+  box-shadow: var(--shadow-lg);
+  border-radius: 12px;
 }
 
 @media (max-width: 992px) {
@@ -1152,13 +1248,14 @@ section,
 --------------------------------------------------------------*/
 .features .nav-tabs {
   border: 0;
-  background-color: color-mix(in srgb, var(--default-color), transparent 96%);
+  background-color: rgba(37, 99, 235, 0.05);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50px;
-  padding: 6px;
+  border-radius: 12px;
+  padding: 8px;
   width: auto;
+  gap: 4px;
 }
 
 .features .nav-item {
@@ -1171,11 +1268,11 @@ section,
 }
 
 .features .nav-link {
-  background-color: none;
+  background-color: transparent;
   color: var(--heading-color);
-  padding: 10px 30px;
-  transition: 0.3s;
-  border-radius: 50px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1183,6 +1280,7 @@ section,
   height: 100%;
   border: 0;
   margin: 0;
+  font-weight: 500;
 }
 
 @media (max-width: 468px) {
@@ -1213,6 +1311,7 @@ section,
 .features .nav-link.active {
   background-color: var(--accent-color);
   border-color: var(--accent-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .features .nav-link.active h4 {
@@ -1226,10 +1325,10 @@ section,
 .features .tab-pane h3 {
   color: var(--heading-color);
   font-weight: 700;
-  font-size: 32px;
+  font-size: 2rem;
   position: relative;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
 }
 
 .features .tab-pane h3:after {
@@ -1237,10 +1336,11 @@ section,
   position: absolute;
   display: block;
   width: 60px;
-  height: 3px;
-  background: var(--accent-color);
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-color), #3b82f6);
   left: 0;
   bottom: 0;
+  border-radius: 2px;
 }
 
 .features .tab-pane ul {
@@ -1249,13 +1349,16 @@ section,
 }
 
 .features .tab-pane ul li {
-  padding-top: 10px;
+  padding-top: 12px;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 .features .tab-pane ul i {
   font-size: 20px;
-  padding-right: 4px;
+  padding-right: 8px;
   color: var(--accent-color);
+  vertical-align: middle;
 }
 
 .features .tab-pane p:last-child {
@@ -1272,8 +1375,17 @@ section,
 
 .features-cards .feature-box {
   height: 100%;
-  padding: 40px 30px;
-  border-radius: 10px;
+  padding: 2.5rem;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.features-cards .feature-box:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(37, 99, 235, 0.2);
 }
 
 .features-cards .feature-box i {
@@ -1296,48 +1408,62 @@ section,
 }
 
 .features-cards .feature-box.orange {
-  background-color: #fff3e2;
+  background: linear-gradient(135deg, #fff7ed 0%, #fff3e2 100%);
+  border-color: rgba(251, 146, 60, 0.2);
 }
 
 .features-cards .feature-box.orange i {
-  color: #edb86e;
+  color: #f97316;
 }
 
 .features-cards .feature-box.blue {
-  background-color: #deedfd;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-color: rgba(37, 99, 235, 0.2);
 }
 
 .features-cards .feature-box.blue i {
-  color: #20a5f8;
+  color: #2563eb;
 }
 
 .features-cards .feature-box.green {
-  background-color: #d5f1e4;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: rgba(34, 197, 94, 0.2);
 }
 
 .features-cards .feature-box.green i {
-  color: #48c88a;
+  color: #22c55e;
 }
 
 .features-cards .feature-box.red {
-  background-color: #fdeded;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-color: rgba(239, 68, 68, 0.2);
 }
 
 .features-cards .feature-box.red i {
-  color: #f28484;
+  color: #ef4444;
 }
 
 /*--------------------------------------------------------------
 # Features 2 Section
 --------------------------------------------------------------*/
 .features-2 .feature-item .feature-icon {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
+  border-radius: 12px;
+  background-color: rgba(37, 99, 235, 0.1);
+  transition: all 0.3s ease;
+}
+
+.features-2 .feature-item:hover .feature-icon {
+  background-color: var(--accent-color);
+  transform: scale(1.05);
+}
+
+.features-2 .feature-item:hover .feature-icon i {
+  color: var(--contrast-color);
 }
 
 .features-2 .feature-item .feature-icon i {
@@ -1389,35 +1515,50 @@ section,
 # Call To Action Section
 --------------------------------------------------------------*/
 .call-to-action .container {
-  background: var(--accent-color);
+  background: linear-gradient(135deg, var(--accent-color) 0%, #1d4ed8 100%);
   color: var(--contrast-color);
   position: relative;
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: 16px;
   padding: 4rem 2rem;
+  box-shadow: var(--shadow-xl);
 }
 
-.call-to-action .content h2,
-.call-to-action .content p {
+.call-to-action .content h2 {
   color: var(--contrast-color);
   position: relative;
   z-index: 2;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.call-to-action .content p {
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  z-index: 2;
+  font-size: 1.125rem;
+  line-height: 1.6;
 }
 
 .call-to-action .btn-cta {
-  background-color: color-mix(in srgb, var(--contrast-color) 15%, transparent);
+  background-color: rgba(255, 255, 255, 0.15);
   color: var(--contrast-color);
-  padding: 12px 40px;
-  border-radius: 50px;
+  padding: 14px 32px;
+  border-radius: 8px;
   transition: all 0.3s ease;
-  border: 2px solid var(--contrast-color);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   position: relative;
   z-index: 2;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
 }
 
 .call-to-action .btn-cta:hover {
   background-color: var(--contrast-color);
   color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .call-to-action .shape {
@@ -1588,10 +1729,18 @@ section,
 --------------------------------------------------------------*/
 .testimonials .testimonial-item {
   background-color: var(--surface-color);
-  box-shadow: 0px 2px 30px rgba(0, 0, 0, 0.08);
-  padding: 30px;
+  box-shadow: var(--shadow-md);
+  padding: 2.5rem;
   position: relative;
   height: 100%;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.testimonials .testimonial-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 .testimonials .testimonial-item .testimonial-img {
@@ -1903,15 +2052,17 @@ section,
 --------------------------------------------------------------*/
 .faq .faq-title {
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 1rem;
   color: var(--heading-color);
+  line-height: 1.2;
 }
 
 .faq .faq-description {
-  font-size: 1rem;
-  color: var(--default-color);
+  font-size: 1.125rem;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
   margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
 .faq .faq-arrow {
@@ -1921,10 +2072,17 @@ section,
 .faq .faq-container .faq-item {
   background-color: var(--surface-color);
   position: relative;
-  padding: 20px;
-  margin-bottom: 15px;
-  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
   overflow: hidden;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.faq .faq-container .faq-item:hover {
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 .faq .faq-container .faq-item:last-child {
@@ -1933,13 +2091,14 @@ section,
 
 .faq .faq-container .faq-item h3 {
   font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  margin: 0 30px 0 0;
-  transition: 0.3s;
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 0 40px 0 0;
+  transition: all 0.3s ease;
   cursor: pointer;
   display: flex;
   align-items: center;
+  color: var(--heading-color);
 }
 
 .faq .faq-container .faq-item h3 .num {
@@ -2038,11 +2197,12 @@ section,
 # Contact Section
 --------------------------------------------------------------*/
 .contact .info-box {
-  background-color: var(--accent-color);
+  background: linear-gradient(135deg, var(--accent-color) 0%, #1d4ed8 100%);
   color: var(--contrast-color);
   padding: 3rem;
-  border-radius: 1rem;
+  border-radius: 16px;
   height: 100%;
+  box-shadow: var(--shadow-xl);
 }
 
 .contact .info-box h3 {
@@ -2122,9 +2282,10 @@ section,
 .contact .contact-form {
   background-color: var(--surface-color);
   padding: 3rem;
-  border-radius: 1rem;
+  border-radius: 16px;
   height: 100%;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
 }
 
 @media (max-width: 992px) {
@@ -2152,16 +2313,19 @@ section,
 .contact .contact-form .form-control,
 .contact .contact-form .form-select {
   padding: 0.875rem 1.25rem;
-  border-color: color-mix(in srgb, var(--default-color), transparent 90%);
-  border-radius: 0.5rem;
-  background-color: color-mix(in srgb, var(--surface-color) 90%, white 5%);
+  border-color: var(--border-color);
+  border-radius: 8px;
+  background-color: var(--surface-color);
   color: var(--default-color);
+  transition: all 0.3s ease;
+  font-size: 15px;
 }
 
 .contact .contact-form .form-control:focus,
 .contact .contact-form .form-select:focus {
-  box-shadow: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   border-color: var(--accent-color);
+  outline: none;
 }
 
 .contact .contact-form .form-control::placeholder,
@@ -2173,11 +2337,14 @@ section,
   background-color: var(--accent-color);
   color: var(--contrast-color);
   padding: 1rem 2rem;
-  border-radius: 2rem;
+  border-radius: 8px;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  border: none;
+  box-shadow: var(--shadow-md);
 }
 
 .contact .contact-form .btn i {
@@ -2185,7 +2352,9 @@ section,
 }
 
 .contact .contact-form .btn:hover {
-  background-color: color-mix(in srgb, var(--accent-color), var(--contrast-color) 20%);
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 /*--------------------------------------------------------------
@@ -2327,4 +2496,5 @@ section,
 --------------------------------------------------------------*/
 .starter-section {
   /* Add your styles here */
+}
 }
