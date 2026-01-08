@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -52,7 +52,7 @@
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
+    navmenu.addEventListener('click', function (e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
       this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
@@ -70,13 +70,15 @@
       window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
     }
   }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  if (scrollTop) {
+    scrollTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
-  });
+  }
 
   window.addEventListener('load', toggleScrollTop);
   document.addEventListener('scroll', toggleScrollTop);
@@ -104,8 +106,8 @@
   /**
    * Init swiper sliders
    */
-  function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+  window.initSwiper = function () {
+    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
       );
@@ -118,7 +120,14 @@
     });
   }
 
-  window.addEventListener("load", initSwiper);
+  /**
+   * Helper function for Swiper Tabs (prevents ReferenceError)
+   */
+  function initSwiperWithCustomPagination(swiperElement, config) {
+    new Swiper(swiperElement, config);
+  }
+
+
 
   /**
    * Initiate Pure Counter
@@ -137,7 +146,7 @@
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
    */
-  window.addEventListener('load', function(e) {
+  window.addEventListener('load', function (e) {
     if (window.location.hash) {
       if (document.querySelector(window.location.hash)) {
         setTimeout(() => {
@@ -173,5 +182,74 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
+
+  /**
+   * Initialize Testimonials Carousel
+   */
+  window.initTestimonialsCarousel = function () {
+    if (typeof Swiper !== 'undefined') {
+      const testimonialsSlider = document.querySelector('.testimonials-slider');
+      if (testimonialsSlider) {
+        // Destroy existing instance if any
+        if (testimonialsSlider.swiper) testimonialsSlider.swiper.destroy();
+
+        new Swiper('.testimonials-slider', {
+          loop: true,
+          speed: 800,
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+          },
+          slidesPerView: 1,
+          spaceBetween: 30,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            dynamicBullets: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+          effect: 'fade',
+          fadeEffect: {
+            crossFade: true
+          },
+        });
+      }
+    }
+  }
+
+  // Initialize carousel on load and after a delay to ensure HTML is included
+
+
+  /**
+   * Footer Service Link Tab Switching
+   */
+  window.switchToTab = function (tabId) {
+    const tabLink = document.querySelector(`[data-bs-target="#${tabId}"]`);
+    if (tabLink) {
+      const tab = new bootstrap.Tab(tabLink);
+      tab.show();
+    }
+  };
+
+  // Initialize all Swipers on load
+  window.addEventListener('load', () => {
+    initSwiper();
+    initTestimonialsCarousel();
+  });
+
+  // Re-run if content is dynamically injected
+  if (window.includeHTML) {
+    const originalIncludeHTML = window.includeHTML;
+    window.includeHTML = function (cb) {
+      originalIncludeHTML(() => {
+        initSwiper();
+        initTestimonialsCarousel();
+        if (cb) cb();
+      });
+    };
+  }
 
 })();
