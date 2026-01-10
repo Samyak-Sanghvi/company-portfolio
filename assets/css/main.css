@@ -1125,8 +1125,8 @@ h6 {
 }
 
 .call-to-action .btn-cta {
-  background: white;
-  color: var(--accent-blue);
+  background: white !important;
+  color: var(--accent-blue) !important;
   padding: 1.25rem 3rem;
   border-radius: 12px;
   font-weight: 700;
