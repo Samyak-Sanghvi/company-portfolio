@@ -45,6 +45,13 @@
       src: url("/assets/fonts/New_font.ttf");
     }
   </style>
+  <script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "vsfgo7g950");
+  </script>
 </head>
 
 <body class="index-page">
@@ -94,12 +101,12 @@
             </li> -->
           <li><a href="#faq">FAQs</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li class="d-md-none"><a href="#contact">Get Started</a></li>
+          <li class="d-md-none"><a href="#" data-open-contact>Get Started</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted d-none d-md-block" href="index.html#contact">Get Started</a>
+      <button class="btn-getstarted d-none d-md-block" data-open-contact>Get Started</button>
     </div>
   </header>
 
@@ -127,7 +134,7 @@
               </p>
 
               <div class="hero-buttons">
-                <a href="#about" class="btn btn-primary me-0 me-sm-2 mx-1">Get Started</a>
+                <button class="btn btn-primary me-0 me-sm-2 mx-1" data-open-contact>Get Started</button>
                 <!-- <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="btn btn-link mt-2 mt-sm-0 glightbox">
                     <i class="bi bi-play-circle me-1"></i>
                     Play Video
@@ -409,6 +416,76 @@
 
   <div w3-include-html="pages/footer.html"></div>
 
+  <!-- ======= Contact Popup Modal ======= -->
+  <div class="contact-modal-overlay" id="contactModalOverlay" role="dialog" aria-modal="true"
+    aria-labelledby="contactModalTitle">
+    <div class="contact-modal-backdrop" id="contactModalBackdrop"></div>
+    <div class="contact-modal">
+
+      <!-- Header -->
+      <div class="contact-modal-header">
+        <div class="modal-icon">
+          <i class="bi bi-chat-dots"></i>
+        </div>
+        <div class="modal-title-group">
+          <h4 id="contactModalTitle">Let's Work Together</h4>
+          <p>Fill in the details below and we'll get back to you within 24 hours.</p>
+        </div>
+        <button class="contact-modal-close" id="contactModalClose" aria-label="Close modal">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <div class="contact-modal-body" id="contactModalFormWrapper">
+        <form id="contactPopupForm" action="https://formspree.io/f/movvpvvo" method="POST" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="popup-name">Your Name</label>
+              <input type="text" id="popup-name" name="name" class="form-control" placeholder="e.g. John Doe"
+                required />
+            </div>
+            <div class="form-group">
+              <label for="popup-email">Email Address</label>
+              <input type="email" id="popup-email" name="email" class="form-control" placeholder="you@example.com"
+                required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="popup-subject">Subject</label>
+            <input type="text" id="popup-subject" name="subject" class="form-control" placeholder="How can we help?"
+              required />
+          </div>
+
+          <div class="form-group">
+            <label for="popup-message">Message</label>
+            <textarea id="popup-message" name="message" class="form-control"
+              placeholder="Tell us about your project, goals, or any questions you have..." required></textarea>
+          </div>
+
+          <button type="submit" class="contact-modal-submit" id="contactPopupSubmit">
+            <span class="btn-spinner"></span>
+            <i class="bi bi-send"></i>
+            <span>Send Message</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Success State -->
+      <div class="contact-modal-success" id="contactModalSuccess">
+        <div class="success-icon">
+          <i class="bi bi-check-lg"></i>
+        </div>
+        <h5>Message Sent!</h5>
+        <p>Thanks for reaching out. Our team will review your message and respond within 24 hours.</p>
+        <button class="btn-close-success" id="contactModalSuccessClose">Close</button>
+      </div>
+
+    </div>
+  </div>
+  <!-- ======= End Contact Popup Modal ======= -->
+
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
@@ -435,6 +512,96 @@
         AOS.refresh();
       }
     });
+  </script>
+
+  <!-- Contact Popup Modal Controller -->
+  <script>
+    (function () {
+      var overlay = document.getElementById('contactModalOverlay');
+      var backdrop = document.getElementById('contactModalBackdrop');
+      var closeBtn = document.getElementById('contactModalClose');
+      var form = document.getElementById('contactPopupForm');
+      var submitBtn = document.getElementById('contactPopupSubmit');
+      var formWrap = document.getElementById('contactModalFormWrapper');
+      var successEl = document.getElementById('contactModalSuccess');
+      var successCloseBtn = document.getElementById('contactModalSuccessClose');
+
+      /* Open */
+      function openModal() {
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // reset to form view each time
+        formWrap.style.display = '';
+        successEl.style.display = 'none';
+        if (form) form.reset();
+        submitBtn.classList.remove('loading');
+      }
+
+      /* Close */
+      function closeModal() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      /* Public trigger — called by buttons */
+      window.openContactModal = openModal;
+
+      /* Close triggers */
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (backdrop) backdrop.addEventListener('click', closeModal);
+      if (successCloseBtn) successCloseBtn.addEventListener('click', closeModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+      });
+
+      /* AJAX form submission to Formspree */
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          // Basic HTML5 validation
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          submitBtn.classList.add('loading');
+
+          var data = new FormData(form);
+
+          fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          })
+            .then(function (res) {
+              submitBtn.classList.remove('loading');
+              if (res.ok) {
+                formWrap.style.display = 'none';
+                successEl.style.display = 'block';
+              } else {
+                return res.json().then(function (json) {
+                  var msg = (json && json.errors) ? json.errors.map(function (e) { return e.message; }).join(', ') : 'Something went wrong. Please try again.';
+                  alert(msg);
+                });
+              }
+            })
+            .catch(function () {
+              submitBtn.classList.remove('loading');
+              alert('Network error. Please check your connection and try again.');
+            });
+        });
+      }
+
+      /* Auto-wire any element with data-open-contact attribute */
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('[data-open-contact]')) {
+          e.preventDefault();
+          openModal();
+        }
+      });
+    })();
   </script>
 </body>
 
